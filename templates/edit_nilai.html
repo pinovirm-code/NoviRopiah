@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Nilai Siswa</title>
+
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Times New Roman", serif;
+}
+
+body {
+    background: #f2f2f2;
+    padding: 40px;
+}
+
+h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #000;
+}
+
+form {
+    background: #ffffff;
+    max-width: 600px;
+    margin: auto;
+    padding: 35px 40px;
+    border: 2px solid #000;
+}
+
+label {
+    display: inline-block;
+    width: 180px;
+    font-weight: bold;
+    color: #000;
+}
+
+input, select {
+    width: calc(100% - 190px);
+    padding: 6px 8px;
+    border: 1px solid #000;
+    font-size: 14px;
+    background: #fff;
+}
+
+input[readonly] {
+    background: #f5f5f5;
+}
+
+input:focus, select:focus {
+    outline: none;
+    background: #f9f9f9;
+}
+
+br + br {
+    margin-bottom: 10px;
+}
+
+button {
+    margin-top: 20px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #000;
+    padding: 8px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #fff;
+    color: #000;
+}
+
+a {
+    margin-left: 15px;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+@media print {
+    button, a {
+        display: none;
+    }
+
+    body {
+        padding: 0;
+        background: none;
+    }
+
+    form {
+        border: none;
+        padding: 20px;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+<h3>Edit Nilai Siswa</h3>
+
+<form method="post">
+
+    <label>NIS</label><br>
+    <input type="text" name="nis" value="{{ nilai.nis }}" readonly><br><br>
+
+    <label>Mata Pelajaran</label><br>
+    <select name="id_mapel" required>
+      {% for m in mapel %}
+      <option value="{{ m.id_mapel }}"
+        {% if m.id_mapel == nilai.id_mapel %}selected{% endif %}>
+        {{ m.nama_mapel }}
+      </option>
+      {% endfor %}
+    </select><br><br>
+
+    <!-- Nilai -->
+    <label>Nilai Tugas</label><br>
+    <input type="number" name="nilai_tugas" value="{{ nilai.nilai_tugas }}" required><br><br>
+
+    <label>Nilai UTS</label><br>
+    <input type="number" name="nilai_uts" value="{{ nilai.nilai_uts }}" required><br><br>
+
+    <label>Nilai UAS</label><br>
+    <input type="number" name="nilai_uas" value="{{ nilai.nilai_uas }}" required><br><br>
+
+    <label>Semester</label><br>
+    <input type="text" name="semester" value="{{ nilai.semester }}" required><br><br>
+
+    <label>Tahun Ajaran</label><br>
+    <input type="text" name="tahun_ajaran" value="{{ nilai.tahun_ajaran }}" required><br><br>
+
+    <button type="submit">Update</button>
+    <a href="{{ url_for('index') }}">Batal</a>
+</form>
+
+</body>
+</html>

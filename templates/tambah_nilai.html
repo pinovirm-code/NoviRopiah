@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Nilai Siswa</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Times New Roman", serif;
+}
+
+body {
+    background: #eaeaea;
+    padding: 40px;
+}
+
+h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+form {
+    background: #fff;
+    max-width: 700px;
+    margin: auto;
+    padding: 35px 40px;
+    border: 1px solid #000;
+}
+
+label {
+    display: inline-block;
+    width: 180px;
+    font-weight: bold;
+    color: #000;
+}
+
+input, select {
+    width: calc(100% - 190px);
+    padding: 6px 8px;
+    border: 1px solid #000;
+    font-size: 14px;
+    background: #fff;
+}
+
+br + br {
+    margin-bottom: 10px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    background: #f9f9f9;
+}
+
+button {
+    margin-top: 20px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #000;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background: #fff;
+    color: #000;
+}
+
+a {
+    margin-left: 15px;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+
+<body>
+
+<h3>Tambah Nilai</h3>
+
+<form method="post">
+
+    <label>Siswa</label><br>
+    <select name="nis" required>
+        {% for s in siswa %}
+        <option value="{{ s.nis }}">{{ s.nis }} - {{ s.nama_siswa }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label>Mata Pelajaran</label><br>
+    <select name="id_mapel" required>
+        {% for m in mapel %}
+        <option value="{{ m.id_mapel }}">{{ m.nama_mapel }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label>Nilai Tugas</label><br>
+    <input type="number" name="nilai_tugas" required><br><br>
+
+    <label>Nilai UTS</label><br>
+    <input type="number" name="nilai_uts" required><br><br>
+
+    <label>Nilai UAS</label><br>
+    <input type="number" name="nilai_uas" required><br><br>
+
+    <label>Semester</label><br>
+    <input type="text" name="semester" required><br><br>
+
+    <label>Tahun Ajaran</label><br>
+    <input type="text" name="tahun_ajaran" required placeholder="2024/2025"><br><br>
+
+    <label>Deskripsi</label><br>
+    <input type="text" name="deskripsi" required><br><br>
+
+    <button type="submit">Simpan</button>
+    <a href="{{ url_for('index') }}">Batal</a>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan Hasil Belajar</title>
+
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            font-size: 12pt;
+            margin: 30px;
+        }
+
+        .judul {
+            text-align: center;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 25px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 6px;
+        }
+
+        th {
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+
+        .no-border td {
+            border: none;
+            padding: 4px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .ttd {
+            width: 100%;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="judul">
+    LAPORAN HASIL BELAJAR PESERTA DIDIK
+</div>
+
+<table class="no-border">
+    <tr>
+        <td width="25%">Nama Peserta Didik</td>
+        <td width="2%">:</td>
+        <td width="33%">{{ siswa.nama_siswa }}</td>
+
+        <td width="15%">Kelas</td>
+        <td width="2%">:</td>
+        <td>{{ siswa.nama_kelas }}</td>
+    </tr>
+    <tr>
+        <td>NIS</td>
+        <td>:</td>
+        <td>{{ siswa.nis }}</td>
+
+        <td>Semester</td>
+        <td>:</td>
+        <td>{{ nilai[0].semester }}</td>
+    </tr>
+    <tr>
+        <td>Tahun Ajaran</td>
+        <td>:</td>
+        <td>{{ nilai[0].tahun_ajaran }}</td>
+    </tr>
+</table>
+
+<br>
+
+<table>
+    <tr>
+        <th width="5%">No</th>
+        <th width="25%">Mata Pelajaran</th>
+        <th width="10%">Tugas</th>
+        <th width="10%">UTS</th>
+        <th width="10%">UAS</th>
+        <th width="10%">Nilai Akhir</th>
+        <th width="30%">Deskripsi</th>
+    </tr>
+
+    {% for n in nilai %}
+    <tr>
+        <td class="center">{{ loop.index }}</td>
+        <td>{{ n.nama_mapel }}</td>
+        <td class="center">{{ n.nilai_tugas }}</td>
+        <td class="center">{{ n.nilai_uts }}</td>
+        <td class="center">{{ n.nilai_uas }}</td>
+        <td class="center">{{ n.nilai_akhir }}</td>
+        <td>{{ n.deskripsi }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<table>
+    <tr>
+        <th>Catatan Wali Kelas</th>
+    </tr>
+    <tr>
+        <td height="70">
+            Ananda menunjukkan perkembangan belajar yang baik selama semester ini.
+        </td>
+    </tr>
+</table>
+
+<br>
+
+<table class="no-border ttd">
+    <tr>
+        <td width="50%">
+            Mengetahui,<br>
+            Orang Tua / Wali
+            <br><br><br><br>
+            ____________________
+        </td>
+
+        <td width="50%">
+            {{ nilai[0].tahun_ajaran }}, .........................<br>
+            Wali Kelas
+            <br><br><br><br>
+            ____________________
+        </td>
+    </tr>
+</table>
+
+<div class="no-print" style="margin-top:30px;">
+    <button onclick="window.print()">🖨 Cetak Rapor</button>
+    <a href="{{ url_for('index') }}">
+        <button>Kembali</button>
+    </a>
+</div>
+
+</body>
+</html>

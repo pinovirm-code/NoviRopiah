@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Data Nilai</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        table {
+            margin: auto;
+        }
+        td {
+            padding: 6px;
+        }
+        input, select {
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<form action="{{ url_for('Tambah') }}" method="post">
+    <center>
+        <h2>Tambah Data Nilai Siswa</h2>
+
+        <table>
+            <tr>
+                <td>NIS</td>
+                <td>
+                    <select name="nis" required>
+                        {% for s in siswa %}
+                        <option value="{{ s.nis }}">{{ s.nis }} - {{ s.nama }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Mata Pelajaran</td>
+                <td>
+                    <select name="id_mapel" required>
+                        {% for m in mapel %}
+                        <option value="{{ m.id_mapel }}">{{ m.nama_mapel }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Nilai Tugas</td>
+                <td><input type="number" name="nilai_tugas" required></td>
+            </tr>
+
+            <tr>
+                <td>Nilai UTS</td>
+                <td><input type="number" name="nilai_uts" required></td>
+            </tr>
+
+            <tr>
+                <td>Nilai UAS</td>
+                <td><input type="number" name="nilai_uas" required></td>
+            </tr>
+
+            <tr>
+                <td>Deskripsi</td>
+                <td><input type="text" name="deskripsi" required></td>
+            </tr>
+
+            <tr>
+                <td>Semester</td>
+                <td>
+                    <select name="semester" required>
+                        <option value="1 Ganjil">1 Ganjil</option>
+                        <option value="2 Genap">2 Genap</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Tahun Ajaran</td>
+                <td><input type="number" name="tahun_ajaran" required></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit">Simpan</button>
+                    <a href="{{ url_for('index') }}">
+                        <button type="button">Kembali</button>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </center>
+</form>
+
+</body>
+</html>
