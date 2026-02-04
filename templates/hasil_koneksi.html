@@ -286,6 +286,12 @@
         Refresh
       </a>
     </div>
+      <a href="{{ url_for('cetak_pdf_daftar_nilai', kelas=filter_kelas, semester=filter_semester, tahun_ajaran=filter_tahun_ajaran) }}" 
+     class="btn" 
+     style="background: #dc3545; border-color: #dc3545;">
+    Cetak PDF
+  </a>
+</div>
 
     <table>
       <thead>

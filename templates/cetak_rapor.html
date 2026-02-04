@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Laporan Hasil Belajar</title>
-
     <style>
         body {
             font-family: "Times New Roman", serif;
@@ -21,6 +20,7 @@
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-bottom: 10px;
         }
 
         th, td {
@@ -46,6 +46,33 @@
             width: 100%;
             margin-top: 40px;
             text-align: center;
+        }
+
+        .keterangan {
+            margin: 15px 0;
+            font-size: 11pt;
+        }
+
+        .keterangan-item {
+            margin-bottom: 5px;
+        }
+
+        .keterangan-label {
+            display: inline-block;
+            width: 200px;
+            font-weight: bold;
+        }
+
+        .catatan-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .catatan-box {
+            border: 1px solid black;
+            padding: 10px;
+            min-height: 60px;
+            margin-top: 5px;
         }
 
         @media print {
@@ -76,19 +103,24 @@
         <td>:</td>
         <td>{{ siswa.nis }}</td>
 
+        {% if nilai and nilai[0] %}
         <td>Semester</td>
         <td>:</td>
         <td>{{ nilai[0].semester }}</td>
+        {% endif %}
     </tr>
     <tr>
+        {% if nilai and nilai[0] %}
         <td>Tahun Ajaran</td>
         <td>:</td>
         <td>{{ nilai[0].tahun_ajaran }}</td>
+        {% endif %}
     </tr>
 </table>
 
 <br>
 
+{% if nilai and nilai|length > 0 %}
 <table>
     <tr>
         <th width="5%">No</th>
@@ -112,22 +144,44 @@
     </tr>
     {% endfor %}
 </table>
+{% else %}
+<p style="text-align: center; color: red; margin: 20px 0;">
+    Belum ada data nilai untuk siswa ini.
+</p>
+{% endif %}
 
 <br>
 
-<table>
-    <tr>
-        <th>Catatan Wali Kelas</th>
-    </tr>
-    <tr>
-        <td height="70">
-            Ananda menunjukkan perkembangan belajar yang baik selama semester ini.
-        </td>
-    </tr>
-</table>
+<!-- KETERANGAN KEHADIRAN -->
+<div class="keterangan">
+    <div class="catatan-title">KETERANGAN KEHADIRAN:</div>
+    <div class="keterangan-item">
+        <span class="keterangan-label">Sakit:</span>
+        <span>{{ sakit_hari if sakit_hari else '0' }} hari</span>
+    </div>
+    <div class="keterangan-item">
+        <span class="keterangan-label">Ijin:</span>
+        <span>___ hari</span>
+    </div>
+    <div class="keterangan-item">
+        <span class="keterangan-label">Tanpa Keterangan:</span>
+        <span>___ hari</span>
+    </div>
+</div>
 
 <br>
 
+<!-- CATATAN WALI KELAS -->
+<div>
+    <div class="catatan-title">Catatan Wali Kelas</div>
+    <div class="catatan-box">
+        {{ catatan_wali if catatan_wali else 'Ananda menunjukkan perkembangan belajar yang baik selama semester ini.' }}
+    </div>
+</div>
+
+<br>
+
+<!-- TANDA TANGAN -->
 <table class="no-border ttd">
     <tr>
         <td width="50%">
@@ -138,7 +192,17 @@
         </td>
 
         <td width="50%">
-            {{ nilai[0].tahun_ajaran }}, .........................<br>
+            {% if nilai and nilai[0] and nilai[0].tahun_ajaran %}
+                {% set tahun = nilai[0].tahun_ajaran|string %}
+                {% if '/' in tahun %}
+                    {{ tahun.split('/')[0] }}, .........................
+                {% else %}
+                    {{ tahun }}, .........................
+                {% endif %}
+            {% else %}
+                2025, .........................
+            {% endif %}
+            <br>
             Wali Kelas
             <br><br><br><br>
             ____________________
@@ -147,9 +211,11 @@
 </table>
 
 <div class="no-print" style="margin-top:30px;">
-    <button onclick="window.print()">🖨 Cetak Rapor</button>
-    <a href="{{ url_for('index') }}">
-        <button>Kembali</button>
+    <a href="{{ url_for('cetak_pdf_siswa', nis=siswa.nis) }}" style="margin-left: 10px;">
+        <button>📥 Download PDF</button>
+    </a>
+    <a href="{{ url_for('daftar_nilai') }}" style="margin-left: 10px;">
+        <button>Kembali ke Daftar</button>
     </a>
 </div>
 

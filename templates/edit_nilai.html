@@ -142,6 +142,23 @@ a:hover {
     <label>Tahun Ajaran</label><br>
     <input type="text" name="tahun_ajaran" value="{{ nilai.tahun_ajaran }}" required><br><br>
 
+    <!-- Tambahkan setelah field Tahun Ajaran, sebelum tombol -->
+<div class="form-row">
+    <div class="form-col">
+        <div class="form-group">
+            <label>Jumlah Hari Sakit</label>
+            <input type="number" name="sakit" value="{{ nilai.sakit if nilai.sakit else 0 }}" min="0" max="365">
+        </div>
+    </div>
+    
+    <div class="form-col">
+        <div class="form-group">
+            <label>Catatan Wali Kelas</label>
+            <textarea name="catatan_wali_kelas" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">{{ nilai.catatan_wali_kelas if nilai.catatan_wali_kelas else '' }}</textarea>
+        </div>
+    </div>
+</div>
+
     <button type="submit">Update</button>
     <a href="{{ url_for('index') }}">Batal</a>
 </form>
